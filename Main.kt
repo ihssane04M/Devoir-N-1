@@ -1,28 +1,44 @@
-package Devoir1.ex1
+package Devoir1.ex2
 
 fun main() {
-    println("Gestion de Bibliothèque ")
-    val bibli = Bibliotheque()
-    val livre1 = Livre("Le Petit Prince", "Antoine de Saint-Exupéry", "789", 1)
-    val livre2 = Livre("L'Étranger",  "Albert Camus", "789", 2)
-    bibli.ajouterLivre(livre1)
-    bibli.ajouterLivre(livre2)
+    println("parc Automobile ")
+    val parc = ParcAutomobile()
 
-    val user1 = Utilisateur("Yahia", "Ihssane", "Ihssane@example.com", 1)
-    val user2 = Utilisateur("Ettaheri", "Nizar", "nizar@example.com", 2)
-    bibli.ajouterUtilisateur(user1)
-    bibli.ajouterUtilisateur(user2)
+    val v1 = Voiture("MA-101-AA", "Peugeot", "208", 45000, 5, "Diesel")
+    val v2 = Moto("MC-222-BB", "Honda", "CB500F", 8500, 471)
+    val v3 = Voiture("MA-303-CC", "Volkswagen", "Golf", 62000, 5, "Essence")
 
-    bibli.afficherTousLesLivres()
-    user1.emprunterLivre(livre1, "2025-10-01")
-    user2.emprunterLivre(livre1, "2025-10-02")
-    user2.emprunterLivre(livre2, "2025-10-03")
-    user1.afficherEmprunts()
-    user2.afficherEmprunts()
+    parc.ajouterVehicule(v1)
+    parc.ajouterVehicule(v2)
+    parc.ajouterVehicule(v3)
 
-    val empruntARetourner = user1.emprunts.firstOrNull()
-    empruntARetourner?.retournerLivre("2025-10-25")
-    user1.afficherEmprunts()
-    bibli.afficherTousLesLivres()
-    val recherche = bibli.rechercherLivreParTitre("Le Petit Prince ")
-    if (recherche != null) println("Livre trouvé : ${recherche.titre}") else println("Livre non trouvé")}
+    val c1 = Conducteur("Mouaad", "Bennani", "P9988776")
+    val c2 = Conducteur("Ihssane", "El Fassi", "P4455667")
+
+    println(" Véhicules disponibles ")
+    parc.afficherVehiculesDisponibles()
+
+    try {
+        val res1 = parc.reserverVehicule("MA-101-AA", c1, "2025-10-06", "2025-10-08")
+        println(" Réservations en cours ")
+        parc.afficherReservations()
+
+        res1.cloturerReservation(45500)
+    } catch (e: Exception) {
+        println("Erreur: ${e.message}")
+    }
+    try {
+        parc.reserverVehicule("MA-101-AA", c2, "2025-10-09", "2025-10-11")
+    } catch (e: Exception) {
+        println("Erreur lors de la réservation: ${e.message}")
+    }
+    try {
+        parc.reserverVehicule("MA-999-ZZ", c2, "2025-10-12", "2025-10-13")
+    } catch (e: Exception) {
+        println("Erreur lors réservation: ${e.message}")
+    }
+    println(" Véhicules disponibles après opérations ")
+    parc.afficherVehiculesDisponibles()
+    println(" Liste finale des réservations ")
+    parc.afficherReservations()
+}
